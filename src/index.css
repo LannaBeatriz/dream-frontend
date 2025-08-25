@@ -1,4 +1,4 @@
-/* Estilos gerais */
+/* Reset e base */
 * {
   margin: 0;
   padding: 0;
@@ -7,7 +7,8 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  background-color: #f3f3f3;
+  background-color: #fafafa;
+  color: #333;
 }
 
 .container {
@@ -19,29 +20,39 @@ body {
 
 .login-box {
   display: flex;
-  width: 900px;
+  width: 850px;
+  min-height: 500px;
   background: white;
-  border-radius: 20px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0px 4px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.08);
 }
 
-/* Lado esquerdo - gradiente e ilustração */
+/* Esquerda */
 .side-panel {
   flex: 1;
-  background: linear-gradient(to bottom right, #7e22ce, #9333ea);
+  background: #fff;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 40px;
+  border-right: 1px solid #eee;
+  text-align: center;
+}
+
+.side-panel h1 {
+  font-size: 1.6rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+  color: #111;
 }
 
 .illustration {
-  width: 100%;
-  max-width: 320px;
+  max-width: 280px;
 }
 
-/* Lado direito */
+/* Direita */
 .form-side {
   flex: 1;
   padding: 40px;
@@ -51,95 +62,153 @@ body {
   align-items: center;
 }
 
-.user-icon {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  background-color: #f3f3f3;
+/* Tabs */
+.tabs {
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.user-icon svg {
-  width: 40px;
-  height: 40px;
-  stroke: #9333ea;
-}
-
-h2 {
-  margin-bottom: 20px;
-  font-weight: 500;
-  color: #333;
-}
-
-.input-group {
-  position: relative;
+  margin-bottom: 25px;
+  gap: 30px;
   width: 100%;
 }
 
-.input-group input {
-  width: 100%;
-  padding: 12px 40px;
-  margin: 8px 0;
+.tabs button {
+  background: none;
   border: none;
-  background-color: #f3f3f3;
-  border-radius: 20px;
+  font-size: 1rem;
+  padding: 5px;
+  cursor: pointer;
+  color: #666;
+  border-bottom: 2px solid transparent;
+  transition: 0.2s;
+}
+
+.tabs button.active {
+  color: #6d28d9;
+  border-color: #6d28d9;
+}
+
+/* Social buttons */
+.social-login {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.social-login .google {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #fff;
   font-size: 0.95rem;
 }
 
-.input-group svg {
+.social-login .apple {
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #000;
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+/* Divider */
+.divider {
+  margin: 15px 0;
+  font-size: 0.85rem;
+  color: #888;
+  position: relative;
+  width: 100%;
+  text-align: center;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
   position: absolute;
   top: 50%;
-  left: 15px;
-  transform: translateY(-50%);
-  width: 18px;
-  height: 18px;
-  stroke: #888;
+  width: 40%;
+  height: 1px;
+  background: #ddd;
 }
 
-/* Opções */
-.options {
-  display: flex;
-  justify-content: space-between;
+.divider::before {
+  left: 0;
+}
+
+.divider::after {
+  right: 0;
+}
+
+/* Forms */
+form {
   width: 100%;
-  font-size: 0.85rem;
-  color: #555;
-  margin: 10px 0 20px 0;
-}
-
-.options label {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 10px;
 }
 
-.options input {
-  margin-right: 5px;
+form input {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: border 0.3s;
 }
 
-.options a {
-  color: #9333ea;
+form input:focus {
+  outline: none;
+  border-color: #6d28d9;
+  box-shadow: 0 0 0 2px #6d28d933;
+}
+
+/* Botão principal */
+.btn-primary {
+  margin-top: 10px;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #9333ea, #6d28d9);
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+/* Esqueceu senha */
+.forgot {
+  margin-top: 15px;
+  font-size: 0.85rem;
+  color: #6d28d9;
   text-decoration: none;
 }
 
-.options a:hover {
+.forgot:hover {
   text-decoration: underline;
 }
 
-/* Botão */
-button {
-  width: 100%;
-  padding: 12px;
-  background: linear-gradient(to right, #9333ea, #7e22ce);
-  color: white;
-  border: none;
-  border-radius: 20px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: opacity 0.3s ease;
-}
+/* Responsivo */
+@media (max-width: 768px) {
+  .login-box {
+    flex-direction: column;
+    width: 95%;
+    height: auto;
+  }
 
-button:hover {
-  opacity: 0.9;
+  .side-panel {
+    border-right: none;
+    border-bottom: 1px solid #eee;
+    padding: 20px;
+  }
+
+  .form-side {
+    padding: 20px;
+  }
 }
