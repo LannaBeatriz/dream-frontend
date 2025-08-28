@@ -1,4 +1,4 @@
-/* Reset e base */
+/* === Reset e base === */
 * {
   margin: 0;
   padding: 0;
@@ -11,34 +11,48 @@ body {
   color: #333;
 }
 
+/* === Layout principal === */
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
+  position: relative; /* permite posicionar a logo dentro do container */
 }
 
 .login-box {
   display: flex;
   width: 850px;
   min-height: 500px;
-  background: white;
+  background: #fff;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
 }
 
-/* Esquerda */
+/* === Logo no canto superior esquerdo === */
+.site-logo {
+  position: absolute;
+  top: 18px;
+  left: 22px;
+  z-index: 20;
+  font-weight: 800;
+  font-size: 28px;
+  color: #5c2dd5; /* Roxo parecido com o exemplo Mobills */
+  letter-spacing: 0.3px;
+  user-select: none;
+}
+
+/* === Painel esquerdo === */
 .side-panel {
   flex: 1;
-  background: #fff;
+  padding: 40px;
+  border-right: 1px solid #eee;
+  text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 40px;
-  border-right: 1px solid #eee;
-  text-align: center;
 }
 
 .side-panel h1 {
@@ -52,7 +66,7 @@ body {
   max-width: 280px;
 }
 
-/* Direita */
+/* === Painel direito === */
 .form-side {
   flex: 1;
   padding: 40px;
@@ -62,12 +76,12 @@ body {
   align-items: center;
 }
 
-/* Tabs */
+/* === Tabs === */
 .tabs {
   display: flex;
   justify-content: center;
-  margin-bottom: 25px;
   gap: 30px;
+  margin-bottom: 25px;
   width: 100%;
 }
 
@@ -87,7 +101,7 @@ body {
   border-color: #6d28d9;
 }
 
-/* Social buttons */
+/* === Botões sociais === */
 .social-login {
   display: flex;
   flex-direction: column;
@@ -96,32 +110,32 @@ body {
   margin-bottom: 20px;
 }
 
-.social-login .google {
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  cursor: pointer;
-  background: #fff;
-  font-size: 0.95rem;
-}
-
+.social-login .google,
 .social-login .apple {
   padding: 12px;
   border-radius: 8px;
-  cursor: pointer;
-  background: #000;
-  color: #fff;
   font-size: 0.95rem;
+  cursor: pointer;
 }
 
-/* Divider */
+.social-login .google {
+  border: 1px solid #ddd;
+  background: #fff;
+}
+
+.social-login .apple {
+  background: #000;
+  color: #fff;
+}
+
+/* === Divider === */
 .divider {
-  margin: 15px 0;
-  font-size: 0.85rem;
-  color: #888;
   position: relative;
   width: 100%;
   text-align: center;
+  font-size: 0.85rem;
+  color: #888;
+  margin: 15px 0;
 }
 
 .divider::before,
@@ -142,7 +156,7 @@ body {
   right: 0;
 }
 
-/* Forms */
+/* === Formulário === */
 form {
   width: 100%;
   display: flex;
@@ -165,7 +179,7 @@ form input:focus {
   box-shadow: 0 0 0 2px #6d28d933;
 }
 
-/* Botão principal */
+/* === Botão principal === */
 .btn-primary {
   margin-top: 10px;
   padding: 12px;
@@ -182,7 +196,7 @@ form input:focus {
   opacity: 0.9;
 }
 
-/* Esqueceu senha */
+/* === Esqueceu senha === */
 .forgot {
   margin-top: 15px;
   font-size: 0.85rem;
@@ -194,7 +208,7 @@ form input:focus {
   text-decoration: underline;
 }
 
-/* Responsivo */
+/* === Responsivo === */
 @media (max-width: 768px) {
   .login-box {
     flex-direction: column;
@@ -211,11 +225,19 @@ form input:focus {
   .form-side {
     padding: 20px;
   }
+
+  .site-logo {
+    position: static;
+    display: block;
+    margin: 12px auto;
+    text-align: center;
+    font-size: 22px;
+  }
 }
 
-/* Mensagem de erro */
+/* === Mensagem de erro === */
 .error-message {
-  color: #d32f2f;
+  color: #e63946;
   background: #fdecea;
   border: 1px solid #f5c2c0;
   padding: 10px;
@@ -223,50 +245,6 @@ form input:focus {
   font-size: 0.9rem;
   margin-bottom: 15px;
   text-align: center;
-}
-
-/* Estilo para campos com erro */
-input.error {
-  border: 2px solid #e63946;   /* Vermelho forte */
-  background-color: #ffe5e5;   /* Fundo levemente rosado */
-  outline: none;
-  transition: 0.3s ease;
-}
-
-/* Placeholder em vermelho suave */
-input.error::placeholder {
-  color: #e63946;
-  opacity: 0.8;
-}
-
-/* Animação de "tremida" quando o erro aparece */
-@keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-4px); }
-  50% { transform: translateX(4px); }
-  75% { transform: translateX(-4px); }
-  100% { transform: translateX(0); }
-}
-
-input.error {
-  animation: shake 0.3s ease;
-}
-
-input.error {
-  border: 1px solid #e63946;
-  background-color: #ffe5e5;
-}
-
-input.error::placeholder {
-  color: #e63946;
-  opacity: 0.7;
-}
-
-.error-message {
-  color: #e63946;
-  margin-bottom: 15px;
-  text-align: center;
-  font-size: 14px;
   animation: fadeIn 0.4s ease;
 }
 
@@ -275,6 +253,29 @@ input.error::placeholder {
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* === Campos com erro === */
+input.error {
+  border: 2px solid #e63946;
+  background-color: #ffe5e5;
+  outline: none;
+  transition: 0.3s ease;
+  animation: shake 0.3s ease;
+}
+
+input.error::placeholder {
+  color: #e63946;
+  opacity: 0.8;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-4px); }
+  100% { transform: translateX(0); }
+}
+
+/* === Grupo de input com ícone === */
 .input-group {
   position: relative;
   display: flex;
@@ -304,6 +305,7 @@ input.error::placeholder {
   font-size: 16px;
 }
 
+/* === Opções extras === */
 .options {
   display: flex;
   justify-content: space-between;
@@ -312,6 +314,7 @@ input.error::placeholder {
   font-size: 13px;
 }
 
+/* === Spinner de carregamento === */
 .spinner {
   width: 16px;
   height: 16px;

@@ -1,7 +1,13 @@
 import { useState } from "react";
+import Tabs from "./components/Tabs";
+import LoginForm from "./components/LoginForm";
+import RegisterForm from "./components/RegisterForm";
 import "./index.css";
-import { FaEnvelope, FaLock, FaUser } from "react-icons/fa";
 import dreamPng from "./assets/dream.png";
+
+// Ícones
+import { FcGoogle } from "react-icons/fc";
+import { FaApple } from "react-icons/fa";
 
 function App() {
   const [activeTab, setActiveTab] = useState("login");
@@ -66,6 +72,9 @@ function App() {
 
   return (
     <div className="container">
+      {/* Logo / nome do app no topo esquerdo */}
+      <header className="site-logo">DREAM</header>
+
       <div className="login-box">
         {/* Lado esquerdo */}
         <div className="side-panel">
@@ -79,25 +88,22 @@ function App() {
         {/* Lado direito */}
         <div className="form-side">
           {/* Tabs */}
-          <div className="tabs">
-            <button 
-              className={activeTab === "login" ? "active" : ""} 
-              onClick={() => { setActiveTab("login"); setError(""); }}
-            >
-              Entrar
-            </button>
-            <button 
-              className={activeTab === "register" ? "active" : ""} 
-              onClick={() => { setActiveTab("register"); setError(""); }}
-            >
-              Cadastrar
-            </button>
-          </div>
+          <Tabs
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            setError={setError}
+          />
 
-          {/* Botões sociais */}
+          {/* Botões sociais centralizados */}
           <div className="social-login">
-            <button className="google">Fazer login com o Google</button>
-            <button className="apple">Fazer login com Apple</button>
+            <button className="google">
+              <FcGoogle size={20} style={{ marginRight: "8px" }} />
+              Entrar com o Google
+            </button>
+            <button className="apple">
+              <FaApple size={20} style={{ marginRight: "8px" }} />
+              Entrar com a Apple
+            </button>
           </div>
 
           <div className="divider">ou</div>
@@ -106,77 +112,25 @@ function App() {
           {error && <div className="error-message">{error}</div>}
 
           {/* Formulários */}
-          {activeTab === "login" && (
-            <form onSubmit={handleLogin}>
-              <div className="input-group">
-                <FaEnvelope className="icon" />
-                <input type="email" name="email" placeholder="Seu email" />
-              </div>
-
-              <div className="input-group">
-                <FaLock className="icon" />
-                <input 
-                  type={showPassword ? "text" : "password"} 
-                  name="password" 
-                  placeholder="Senha" 
-                />
-                <span className="toggle-password" onClick={() => setShowPassword(!showPassword)}>
-                  {showPassword ? "🙈" : "👁️"}
-                </span>
-              </div>
-
-              <div className="options">
-                <label>
-                  <input type="checkbox" name="remember" /> Lembrar login
-                </label>
-                <a href="#" className="forgot">Esqueceu sua senha?</a>
-              </div>
-
-              <button type="submit" className="btn-primary">
-                {loading ? <span className="spinner"></span> : "Entrar"}
-              </button>
-            </form>
+          {activeTab === "login" ? (
+            <LoginForm
+              handleLogin={handleLogin}
+              invalidFields={invalidFields}
+              showPassword={showPassword}
+              setShowPassword={setShowPassword}
+              loading={loading}
+            />
+          ) : (
+            <RegisterForm
+              handleRegister={handleRegister}
+              invalidFields={invalidFields}
+              showPassword={showPassword}
+              setShowPassword={setShowPassword}
+              showConfirmPassword={showConfirmPassword}
+              setShowConfirmPassword={setShowConfirmPassword}
+              loading={loading}
+            />
           )}
-
-          {activeTab === "register" && (
-            <form onSubmit={handleRegister}>
-              <div className="input-group">
-                <FaUser className="icon" />
-                <input type="text" name="name" placeholder="Nome completo" />
-              </div>
-
-              <div className="input-group">
-                <FaEnvelope className="icon" />
-                <input type="email" name="email" placeholder="Seu email" />
-              </div>
-
-              <div className="input-group">
-                <FaLock className="icon" />
-                <input 
-                  type={showPassword ? "text" : "password"} 
-                  name="password" 
-                  placeholder="Senha" 
-                />
-              </div>
-
-              <div className="input-group">
-                <FaLock className="icon" />
-                <input 
-                  type={showConfirmPassword ? "text" : "password"} 
-                  name="confirmPassword" 
-                  placeholder="Confirmar senha" 
-                />
-                <span className="toggle-password" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
-                  {showConfirmPassword ? "🙈" : "👁️"}
-                </span>
-              </div>
-
-              <button type="submit" className="btn-primary">
-                {loading ? <span className="spinner"></span> : "Cadastrar"}
-              </button>
-            </form>
-          )}
-
         </div>
       </div>
     </div>
