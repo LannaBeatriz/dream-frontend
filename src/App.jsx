@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Tabs from "./components/Tabs";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
@@ -12,15 +13,20 @@ import { FaApple } from "react-icons/fa";
 function App() {
   const [activeTab, setActiveTab] = useState("login");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(""); // Novo estado para mensagens de sucesso
   const [invalidFields, setInvalidFields] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleRegister = (e) => {
+  // 🔹 Função de cadastro atualizada
+  const handleRegister = async (e) => {
     e.preventDefault();
     setError("");
+    setSuccess(""); // Limpa a mensagem de sucesso ao tentar um novo cadastro
     setInvalidFields([]);
+    setLoading(true);
 
     const name = e.target.name.value.trim();
     const email = e.target.email.value.trim();
@@ -36,23 +42,43 @@ function App() {
     if (errors.length > 0) {
       setInvalidFields(errors);
       setError("Preencha todos os campos!");
+      setLoading(false);
       return;
     }
 
     if (password !== confirmPassword) {
       setInvalidFields(["password", "confirmPassword"]);
       setError("As senhas não coincidem!");
+      setLoading(false);
       return;
     }
 
-    alert("Cadastro realizado com sucesso ✅");
-    e.target.reset();
+    try {
+      const response = await fetch("http://localhost:5000/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        e.target.reset();
+        setSuccess(data.mensagem || "Cadastro realizado com sucesso!"); // Exibe a mensagem de sucesso
+      } else {
+        setError(data.mensagem || "Erro ao cadastrar.");
+      }
+    } catch (err) {
+      setError("Erro de conexão com o servidor.");
+    }
+    setLoading(false);
   };
 
-  const handleLogin = (e) => {
+  // 🔹 Função de login permanece igual
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
+    setSuccess(""); // Limpa a mensagem de sucesso ao tentar um novo login
     setInvalidFields([]);
+    setLoading(true);
 
     const email = e.target.email.value.trim();
     const password = e.target.password.value;
@@ -64,10 +90,27 @@ function App() {
     if (errors.length > 0) {
       setInvalidFields(errors);
       setError("Preencha todos os campos!");
+      setLoading(false);
       return;
     }
 
-    alert("Login efetuado com sucesso ✅");
+    try {
+      const response = await fetch("http://localhost:5000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        localStorage.setItem("token", data.token); // Salva o token
+        navigate("/metas"); // Redireciona para a página de metas após o login
+      } else {
+        setError(data.mensagem || "Erro ao fazer login.");
+      }
+    } catch (err) {
+      setError("Erro de conexão com o servidor.");
+    }
+    setLoading(false);
   };
 
   return (
@@ -110,6 +153,9 @@ function App() {
 
           {/* Mensagem de erro */}
           {error && <div className="error-message">{error}</div>}
+
+          {/* Mensagem de sucesso */}
+          {success && <div className="success-message">{success}</div>}
 
           {/* Formulários */}
           {activeTab === "login" ? (
